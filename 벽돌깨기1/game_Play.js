@@ -96,6 +96,8 @@ function setBackground(level) {
   back.style.backgroundSize = "cover";
 }
 
+var ck = 1;
+
 //공
 class Ball {
   constructor(x, y, radius, speed, angle) {
