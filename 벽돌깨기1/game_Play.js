@@ -17,7 +17,9 @@ var is_darksonic = false; //다크소닉 상태
 function startGame(level) {
   if (myReq) cancelAnimationFrame(myReq);
   g_level = level;
-  brickData = mkBricks(g_level);
+  if(level != 3){
+   brickData = mkBricks(g_level);
+  }
   game = new Game(g_level);
   mainLoop();
 }
@@ -62,8 +64,7 @@ function mkBricks(level) {
     for (var r = 0; r < row; r++) {
       var line = new Array(col);
       for (var c = 0; c < col; c++) {
-        if (c % 2) line[c] = new Brick("red", 2);
-        //아이템 랜덤 생성시 브릭을 매번 생성해줘야됨
+        if (c % 2) line[c] = new Brick("red", 2);//아이템 랜덤 생성시 브릭을 매번 생성해줘야됨
         else line[c] = new Brick("blue", 1);
       }
       data.push(line);
@@ -84,21 +85,8 @@ function mkBricks(level) {
     }
     return data;
   }
-  if (level == 3) {
-    var row = 5;
-    var col = 10;
-    var data = [];
-    for (var r = 0; r < row; r++) {
-      var line = new Array(col);
-      for (var c = 0; c < col; c++) {
-        if (c % 2) line[c] = new Brick("yellow", 2);
-        else line[c] = new Brick("blue", 2);
-      }
-      data.push(line);
-    }
-    return data;
-  }
 }
+
 //배경 설정
 function setBackground(level) {
   var back = document.getElementById("back-ground");
@@ -123,6 +111,11 @@ class Ball {
     var radian = (angle / 180) * Math.PI;
     this.mx = this.speed * Math.cos(radian);
     this.my = -this.speed * Math.sin(radian);
+  }
+  setcircleAngle(angle){
+    var radian = (angle / 180) * Math.PI;
+    this.mx = this.mx * Math.cos(radian);
+    this.my = -this.my * Maths.sin(radian);
   }
   move(k) {
     this.x = this.x + this.mx * k;
@@ -223,12 +216,10 @@ class Eggman1 {
       if(ck==1){
         var radian = Math.atan((bossy-ball.y)*(-1)/(bossx-ball.x))-Math.atan((ball.coly-ball.y)*(-1)/(ball.colx-ball.x));
         var angle = radian * 180 / Math.PI;
-        console.info(angle);
         if(angle < 0){
           angle = 360 + angle;
         }
-        console.info(angle);
-        ball.setAngle(360-angle);
+        ball.setcircleAngle(360-angle);
         ck = 0;
       }
     }
@@ -284,12 +275,9 @@ class Paddle {
       const hitPos = ball.x - this.center;
       var angle = 80 - (hitPos / this.halfWidth) * 60;
       ball.setAngle(angle);
-<<<<<<< HEAD
       ball.colx = ball.x;
       ball.coly = ball.y;
       ck = 1;
-=======
->>>>>>> 61b46511f47dbd745a414f3542dd39fd0b8eab3a
     }
   }
 
@@ -466,6 +454,7 @@ document.addEventListener("keydown", (e) => {
 class Game {
   constructor(level) {
     var brickSettings = [brickData, 0, 50, WIDTH, 150];
+    var boss = [(WIDTH - 350)/2, HEIGHT-700, 3];
 
     this.level = level;
 
@@ -486,9 +475,12 @@ class Game {
       ballSpeeds[level - 1],
       80
     );
-    this.ball[1] = null;
-    this.bricks = new Bricks(...brickSettings);
-    setBackground(level);
+    if (level != 3){
+     this.bricks = new Bricks(...brickSettings);
+    } else {
+      this.boss = new Eggman1(...boss);
+    }
+    this.ball[1]=null;
   }
 
   update() {
@@ -507,15 +499,20 @@ class Game {
       this.ball[0].move(1 / DIV);
       this.ball[0].collideWall(0, 0, WIDTH);
       this.paddle.collide(this.ball[0]);
-      if (this.bricks.collide(this.ball[0].collideX, this.ball[0].y)) {
-        if (!is_supersonic) {
-          this.ball[0].mx *= -1;
+      if(this.level != 3){
+        if (this.bricks.collide(this.ball[0].collideX, this.ball[0].y)){
+          if(!is_supersonic){
+            this.ball[0].mx *= -1;
+          }
+        } 
+        if (this.bricks.collide(this.ball[0].x, this.ball[0].collideY)){
+          if(!is_supersonic){
+            this.ball[0].my *= -1;
+          }
         }
-      }
-      if (this.bricks.collide(this.ball[0].x, this.ball[0].collideY)) {
-        if (!is_supersonic) {
-          this.ball[0].my *= -1;
-        }
+      }else{
+        this.boss.collide(this.ball[0]);
+        this.boss.collideb(this.ball[0]);
       }
       //너클즈가 존재한다면
       if (this.ball[1] != null) {
@@ -552,10 +549,11 @@ class Game {
         this.ball[1] = null;
       }
     }
-    if (this.bricks.count == 0) {
-      if (g_level == 1) game.state = "go2Lv2";
-      if (g_level == 2) game.state = "go2Lv3";
-      else game.state = "clear";
+    if(this.level!=3){
+      if (this.bricks.count == 0) {
+       if (this.level == 1) game.state = "go2Lv2";
+       else if (this.level == 2) game.state = "go2Lv3";
+       else game.state = "clear";
     }
   }
 
@@ -566,8 +564,11 @@ class Game {
     if (this.ball[1] != null) {
       this.ball[1].draw(ctx);
     }
-    this.bricks.draw(ctx);
-  }
+    if (this.level != 3){
+      this.bricks.draw(ctx);
+    } else {
+      this.boss.draw(ctx);
+    }  }
 }
 //임시 결과창 함수
 function resultScreen(result) {
