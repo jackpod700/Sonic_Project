@@ -1,0 +1,92 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+body {
+  line-height: 1;
+  background-color: white; /**임시**/
+}
+ol,
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+#back-ground {
+  background-color: orange; /**임시**/
+  background-image: url("backTmp.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#main-screen {
+  background-color: yellow; /**임시**/
+  width: 800px;
+  height: 1000px;
+  margin: auto;
+  overflow:hidden;
+}
+#game-screen {
+  background-color: green; /**임시**/
+  width: 700px;
+  height: 800px;
+  margin: auto;
+  margin-top: 30px;
+}
+#game-canvas {
+  width: 100%;
+  height: 100%;
+}
+#tmpBtn {
+  width: 700px;
+  margin: auto;
+}
+input[type="button"] {
+  width: 100px;
+  margin: 0 64px;
+  border: 1px solid blue;
+}
+
+/*아이템 창*/
+#items{
+  width:500px;
+  height:50px;
+  background-color: black;
+}
+
+.item{
+  margin-top:10px;
+  margin-left:5px;
+  width:100px;
+  overflow:hidden;
+  display:inline-block;
+}
+
+.item_img{
+  display: inline;
+  float:left;
+  margin-left: 10px;
+}
+
+.item_count{
+  color:white;
+  margin-left:80px;
+  font-size:30px;
+}
+
+#ring_count{
+  color:white;
+  margin-left:40px;
+  font-size:30px;
+}
+
+.press_img{
+  display: inline;
+  float: left;
+}

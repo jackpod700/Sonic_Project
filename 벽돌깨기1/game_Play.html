@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>벽돌깨기</title>
+    <link rel="stylesheet" href="game_Play.css" />
+  </head>
+  <body>
+    <!--배경 이미지 부분-->
+    <div id="back-ground">
+      <!--게임 전체(각종 인터페이스 포함)-->
+      <div id="main-screen">
+        <!--아이템 창-->
+          <div id="items">
+            <div class="item" id="ring">
+              <img class="item_img" src="ring/ring-sonic.gif" width=40 height=30/>
+              <div class="item_count" id="ring_count">0</div>
+            </div>
+            <div class="item">
+              <img class="press_img" src="press1/press1.gif" width="30" height="30"/>
+              <img class="item_img" src="supersonic/supersonic.gif" width="30" height="30"/>
+              <p class="item_count" id="supersonic_count">0</p>
+            </div>
+            <div class="item">
+              <img class="press_img" src="press2/press2.gif" width="30" height="30"/>
+              <img class="item_img" src="clock/clock.gif" width="30" height="30"/>
+              <p class="item_count" id="clock_count">0</p>
+            </div>
+            <div class="item">
+              <img class="press_img" src="press3/press3.gif" width="30" height="30"/>
+              <img class="item_img" src="Knuckles/Knuckles_ball.gif" width="30" height="30"/>
+              <p class="item_count" id="Knuckles_count">0</p>
+            </div>
+          </div>
+        <!--벽돌깨기 게임 부분-->
+        <div id="game-screen">
+          <canvas
+            id="game-canvas"
+            width="700"
+            height="800"
+            tabindex="-1"
+          ></canvas>
+        </div>
+        <div id="tmpBtn">
+          <input type="button" id="Lv1" value="level1" />
+          <input type="button" id="Lv2" value="level2" />
+          <input type="button" id="Lv3" value="level3" />
+        </div>
+      </div>
+
+
+    </div>
+    <script src="game_Play.js"></script>
+  </body>
+</html>
