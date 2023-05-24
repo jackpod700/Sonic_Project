@@ -96,6 +96,8 @@ function setBackground(level) {
   back.style.backgroundSize = "cover";
 }
 
+var ck = 1;
+
 //공
 class Ball {
   constructor(x, y, radius, speed, angle) {
@@ -114,8 +116,8 @@ class Ball {
   }
   setcircleAngle(angle){
     var radian = (angle / 180) * Math.PI;
-    this.mx = this.mx * Math.cos(radian);
-    this.my = -this.my * Maths.sin(radian);
+    this.mx = this.speed * Math.cos(radian);
+    this.my = -this.speed * Math.sin(radian);
   }
   move(k) {
     this.x = this.x + this.mx * k;
@@ -554,6 +556,7 @@ class Game {
        if (this.level == 1) game.state = "go2Lv2";
        else if (this.level == 2) game.state = "go2Lv3";
        else game.state = "clear";
+      }
     }
   }
 
@@ -568,7 +571,8 @@ class Game {
       this.bricks.draw(ctx);
     } else {
       this.boss.draw(ctx);
-    }  }
+    }
+  }
 }
 //임시 결과창 함수
 function resultScreen(result) {
