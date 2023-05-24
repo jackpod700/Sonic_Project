@@ -1,0 +1,10 @@
+diff a/벽돌깨기1/game_Play.js b/벽돌깨기1/game_Play.js	(rejected hunks)
+@@ -96,6 +96,8 @@
+   back.style.backgroundSize = "cover";
+ }
+ 
++var ck = 1;
++
+ //공
+ class Ball {
+   constructor(x, y, radius, speed, angle) {

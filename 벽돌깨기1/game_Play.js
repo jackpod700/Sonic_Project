@@ -96,8 +96,6 @@ function setBackground(level) {
   back.style.backgroundSize = "cover";
 }
 
-var ck = 1;
-
 //공
 class Ball {
   constructor(x, y, radius, speed, angle) {
@@ -216,7 +214,7 @@ class Eggman1 {
     var check = () => (ball.x - bossx) ** 2 + (ball.y - bossy) ** 2 < 3600;
     if (check()) {
       if(ck==1){
-        var radian = Math.atan((bossy-ball.y)*(-1)/(bossx-ball.x))-Math.atan((ball.coly-ball.y)*(-1)/(ball.colx-ball.x));
+        var radian = Math.atan((bossy-ball.y)/(bossx-ball.x))-Math.atan((ball.coly-ball.y)/(ball.colx-ball.x));
         var angle = radian * 180 / Math.PI;
         if(angle < 0){
           angle = 360 + angle;
