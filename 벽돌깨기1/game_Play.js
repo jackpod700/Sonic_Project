@@ -140,9 +140,30 @@ class Ball {
   }
 
   collideWall(left, top, right) {
-    if (this.mx < 0 && this.collideX < left) this.mx *= -1;
-    if (this.mx > 0 && this.collideX > right) this.mx *= -1;
-    if (this.my < 0 && this.collideY < top) this.my *= -1;
+    if (this.mx < 0 && this.collideX < left) {
+      if (ck == 0) {
+        ck = 1;
+      }
+      this.mx *= -1;
+      this.colx = this.x;
+      this.coly = this.y;
+    }
+    if (this.mx > 0 && this.collideX > right) {
+      if (ck == 0) {
+        ck = 1;
+      }
+      this.mx *= -1;
+      this.colx = this.x;
+      this.coly = this.y;
+    }
+    if (this.my < 0 && this.collideY < top) {
+      if (ck == 0) {
+        ck = 1;
+      }
+      this.my *= -1;
+      this.colx = this.x;
+      this.coly = this.y;
+    }
   }
 
   draw(ctx) {
@@ -178,6 +199,62 @@ class Ball {
       );
       ctx.closePath();
     }
+  }
+}
+
+var eggman1Img = new Image();
+eggman1Img.src = "eggman1.gif";
+var bossx = WIDTH / 2;
+var bossy = HEIGHT - 640;
+var bossr = 40;
+
+class Eggman1 {
+  constructor(x, y, hp) {
+    this.x = x;
+    this.y = y;
+    this.hp = hp;
+    this.bx = bossx;
+    this.by = bossy + 185;
+  }
+
+  collide(ball) {
+    var check = () => (ball.x - bossx) ** 2 + (ball.y - bossy) ** 2 < 3600;
+    if (check()) {
+      if (ck == 1) {
+        var radian =
+          Math.atan((bossy - ball.y) / (bossx - ball.x)) -
+          Math.atan((ball.coly - ball.y) / (ball.colx - ball.x));
+        var angle = (-1 * radian * 180) / Math.PI;
+        ball.setAngle(angle);
+        ck = 0;
+      }
+    }
+  }
+
+  collideb(ball) {
+    var check = () =>
+      (ball.x - bossx) ** 2 + (ball.y - (bossy + 180)) ** 2 < 3025;
+    if (check()) {
+      if (ck == 1) {
+        var radian =
+          Math.atan((bossy + 180 - ball.y) / (bossx - ball.x)) -
+          Math.atan((ball.coly - ball.y) / (ball.colx - ball.x));
+        var angle = (radian * 180) / Math.PI;
+        ball.setAngle(angle);
+        ck = 0;
+      }
+    }
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.arc(bossx, bossy, 40, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "black";
+    ctx.arc(this.bx, this.by, 35, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.drawImage(eggman1Img, this.x, this.y, 350, 300);
+    ctx.closePath();
   }
 }
 
