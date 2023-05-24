@@ -198,9 +198,14 @@ class Eggman1{
     var check = () => (ball.x-bossx)**2+(ball.y-bossy)**2 < 3600;
     if (check()) {
       if(ck==1){
-        var radian = Math.atan((bossy-ball.y)/(bossx-ball.x))-Math.atan((ball.coly-ball.y)/(ball.colx-ball.x));
-        var angle = (-1) * radian * 180 / Math.PI;
-        ball.setAngle(angle);
+        var radian = Math.atan((bossy-ball.y)*(-1)/(bossx-ball.x))-Math.atan((ball.coly-ball.y)*(-1)/(ball.colx-ball.x));
+        var angle = radian * 180 / Math.PI;
+        console.info(angle);
+        if(angle < 0){
+          angle = 360 + angle;
+        }
+        console.info(angle);
+        ball.setAngle(360-angle);
         ck = 0;
       }
     }
@@ -260,7 +265,7 @@ class Paddle {
       var angle = 80 - (hitPos / this.halfWidth) * 60;
       ball.setAngle(angle);
       ball.colx = ball.x;
-      ball.coly = ball.y + ball.radius;
+      ball.coly = ball.y;
       ck = 1;
     }
   }
