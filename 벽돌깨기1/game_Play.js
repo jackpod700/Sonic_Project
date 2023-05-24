@@ -122,18 +122,24 @@ class Ball {
         ck =1;
       }
       this.mx *= -1;
+      this.colx = this.x;
+      this.coly = this.y;
     }
     if (this.mx > 0 && this.collideX > right){
      if(ck ==0){
         ck =1;
      }
       this.mx *= -1;
+      this.colx = this.x;
+      this.coly = this.y;
     }
     if (this.my < 0 && this.collideY < top){
      if(ck ==0){
        ck =1;
      }
       this.my *= -1;
+      this.colx = this.x;
+      this.coly = this.y;
     }
   }
 
@@ -193,7 +199,7 @@ class Eggman1{
     if (check()) {
       if(ck==1){
         var radian = Math.atan((bossy-ball.y)/(bossx-ball.x))-Math.atan((ball.coly-ball.y)/(ball.colx-ball.x));
-        var angle = radian * 180 / Math.PI;
+        var angle = (-1) * radian * 180 / Math.PI;
         ball.setAngle(angle);
         ck = 0;
       }
